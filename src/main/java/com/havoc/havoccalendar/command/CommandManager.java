@@ -175,14 +175,14 @@ public final class CommandManager implements CommandExecutor, TabCompleter {
                 "%year%", String.valueOf(dates.eventYear()),
                 "%retroactive%", String.valueOf(plugin.allowRetroactiveClaims()));
         for (String line : plugin.getConfig().getStringList("messages.info")) {
-            plugin.sendRaw(sender, line, ph);
+            plugin.sendChat(sender, line, ph);
         }
     }
 
     private void sendHelp(CommandSender sender, String label) {
         String path = sender.hasPermission(PERM_ADMIN) ? "messages.help-admin" : "messages.help";
         for (String line : plugin.getConfig().getStringList(path)) {
-            plugin.sendRaw(sender, line, Map.of("%label%", label));
+            plugin.sendChat(sender, line, Map.of("%label%", label));
         }
     }
 

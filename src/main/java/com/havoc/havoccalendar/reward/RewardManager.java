@@ -1,5 +1,6 @@
 package com.havoc.havoccalendar.reward;
 
+import com.havoc.havoccalendar.HavocCalendarMain;
 import com.havoc.havoccalendar.util.DateUtils;
 import com.havoc.havoccalendar.util.TextUtil;
 import org.bukkit.Bukkit;
@@ -7,7 +8,6 @@ import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.util.HashMap;
@@ -41,10 +41,10 @@ public final class RewardManager {
     ) {
     }
 
-    private final JavaPlugin plugin;
+    private final HavocCalendarMain plugin;
     private final Map<Integer, DayReward> rewards = new HashMap<>();
 
-    public RewardManager(JavaPlugin plugin) {
+    public RewardManager(HavocCalendarMain plugin) {
         this.plugin = plugin;
     }
 
@@ -136,7 +136,7 @@ public final class RewardManager {
      * <ul>
      *     <li>{@code [console] give %player_name% diamond 1}</li>
      *     <li>{@code [player] spawn} - run as the player</li>
-     *     <li>{@code [message] &aHello!} - private message to the player</li>
+     *     <li>{@code [message] &aHello!} - message to the player (action bar or chat)</li>
      *     <li>{@code [broadcast] &6Hi all} - server-wide message</li>
      * </ul>
      */
@@ -152,9 +152,9 @@ public final class RewardManager {
                 if (lower.startsWith("[player]")) {
                     player.performCommand(stripSlash(line.substring(8).trim()));
                 } else if (lower.startsWith("[message]")) {
-                    player.sendMessage(TextUtil.parse(line.substring(9).trim()));
+                    plugin.deliver(player, TextUtil.parse(line.substring(9).trim()));
                 } else if (lower.startsWith("[broadcast]")) {
-                    Bukkit.getServer().broadcast(TextUtil.parse(line.substring(11).trim()));
+                    plugin.broadcast(TextUtil.parse(line.substring(11).trim()), player);
                 } else {
                     String command = lower.startsWith("[console]") ? line.substring(9).trim() : line;
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), stripSlash(command));
@@ -166,7 +166,7 @@ public final class RewardManager {
         }
 
         if (reward.broadcastMessage() != null && !reward.broadcastMessage().isBlank()) {
-            Bukkit.getServer().broadcast(TextUtil.parse(reward.broadcastMessage(), ph));
+            plugin.broadcast(TextUtil.parse(reward.broadcastMessage(), ph), player);
         }
     }
 

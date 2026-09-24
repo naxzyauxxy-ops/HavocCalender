@@ -26,6 +26,10 @@ last-claim-day: 31
 # Allow opening the GUI outside of December (all doors are shown locked).
 allow-open-outside-december: true
 
+# Where messages are shown: ACTION_BAR or CHAT.
+# (help / info lists always use chat since they are multi-line)
+message-display: ACTION_BAR
+
 # Close the GUI automatically after a successful claim.
 close-on-claim: false
 
@@ -157,31 +161,32 @@ states:
     glow: false
 
 # ----------------------------------------------------------------------------
-#  Messages
+#  Messages - kept short so they fit on the action bar.
 # ----------------------------------------------------------------------------
 messages:
-  prefix: "&#C41E3A&l[&#FFFFFF&lAdvent&#C41E3A&l] &r"
-  no-permission: "&cYou don't have permission to do that."
-  player-only: "&cOnly players can open the Advent Calendar."
-  not-december: "&7The Advent Calendar opens on &#FFD700December 1st &7(in &f%days_until% &7days)!"
-  claim-success: "&aYou opened door &f#%day%&a! Enjoy your gift. &#FFD700✦"
-  already-claimed: "&7You've already opened door &f#%day%&7."
-  day-locked: "&cNo peeking! &7Door &f#%day% &7unlocks on &f%unlock_date% &7(in &f%days_until% &7day(s))."
-  day-locked-not-december: "&cThe calendar hasn't started yet! &7Come back on &fDecember 1st&7."
-  day-missed: "&7You missed door &f#%day%&7... &8Santa left you coal instead."
-  new-day-available: "&#228B22&l🎁 &aDoor &f#%day% &ais now open! Use &f/calendar &ato claim it."
-  join-reminder: "&#FFD700✦ &7You have &e%available% &7Advent door(s) waiting! Type &f/calendar&7."
-  reloaded: "&aconfig.yml and rewards.yml reloaded."
-  usage-reset: "&cUsage: /%label% reset <player> [day]"
-  usage-setday: "&cUsage: /%label% setday <1-31|off>"
-  player-not-found: "&cNo data found for player &f%player%&c."
-  invalid-day: "&c'%input%' is not a valid day (1-%max%)."
-  reset-all: "&aReset all %year% claims for &f%player%&a."
-  reset-day: "&aReset day &f%day% &a(%year%) for &f%player%&a."
-  reset-nothing: "&7%player% had nothing to reset for day %day% (%year%)."
-  setday-set: "&eSimulating &fDecember %day%&e for everyone. &7(/havoccalendar setday off to stop - not saved across restarts)"
-  setday-cleared: "&aDate override removed - using the real date again."
+  prefix: ""
+  no-permission: "&cNo permission."
+  player-only: "&cPlayers only."
+  not-december: "&7Opens &fDec 1 &8(&f%days_until%d&8)"
+  claim-success: "&a🎁 Day %day% claimed!"
+  already-claimed: "&7Day %day% already claimed."
+  day-locked: "&c🔒 Day %day% &7- unlocks in &f%days_until%d"
+  day-locked-not-december: "&c🔒 Opens Dec 1"
+  day-missed: "&8Day %day% missed."
+  new-day-available: "&a🎁 Day %day% is open! &7/calendar"
+  join-reminder: "&e🎁 %available% gift(s) waiting! &7/calendar"
+  reloaded: "&aReloaded."
+  usage-reset: "&c/%label% reset <player> [day]"
+  usage-setday: "&c/%label% setday <1-31|off>"
+  player-not-found: "&cPlayer not found."
+  invalid-day: "&cInvalid day (1-%max%)."
+  reset-all: "&aReset %player%."
+  reset-day: "&aReset %player% day %day%."
+  reset-nothing: "&7Nothing to reset."
+  setday-set: "&eSimulating Dec %day%."
+  setday-cleared: "&aUsing real date."
 
+  # Multi-line output below always goes to chat (it can't fit on an action bar).
   help:
     - "&#C41E3A&l❄ &fHavocCalendar"
     - "&e/%label% &7- Open the Advent Calendar"

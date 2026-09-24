@@ -14,7 +14,7 @@
 #    commands           Actions run on claim, in order. Prefixes:
 #                         (none) / [console]  - run from console
 #                         [player]            - run as the player
-#                         [message] <text>    - private message to the player
+#                         [message] <text>    - message to the player (action bar or chat)
 #                         [broadcast] <text>  - server-wide message
 #    claim-message      (optional) replaces the default claim message
 #    broadcast-message  (optional) broadcast to the whole server when claimed
@@ -410,7 +410,7 @@ days:
     commands:
       - "give %player_name% minecraft:shulker_box 1"
       - "give %player_name% minecraft:diamond 16"
-    broadcast-message: "&#9B30FF✦ &f%player_name% &7opened an &5Epic &7Advent door (Day %day%)!"
+    broadcast-message: "&5✦ &f%player_name% &7opened Day %day%!"
 
   23:
     item-material: ENDER_CHEST
@@ -427,7 +427,7 @@ days:
     commands:
       - "give %player_name% minecraft:totem_of_undying 1"
       - "give %player_name% minecraft:netherite_scrap 2"
-    broadcast-message: "&#9B30FF✦ &f%player_name% &7opened an &5Epic &7Advent door (Day %day%)!"
+    broadcast-message: "&5✦ &f%player_name% &7opened Day %day%!"
 
   24:
     item-material: ENDER_CHEST
@@ -444,7 +444,7 @@ days:
     commands:
       - "give %player_name% minecraft:elytra 1"
       - "give %player_name% minecraft:firework_rocket 32"
-    broadcast-message: "&#9B30FF✦ &f%player_name% &7opened an &5Epic &7Advent door (Day %day%)!"
+    broadcast-message: "&5✦ &f%player_name% &7opened Day %day%!"
 
   25:
     item-material: NETHER_STAR
@@ -474,6 +474,5 @@ days:
       - "give %player_name% minecraft:nether_star 1"
       - "give %player_name% minecraft:diamond 32"
       - "xp add %player_name% 30 levels"
-      - "[message] &#FFD700✦ &fMerry Christmas from the whole staff team! &#FFD700✦"
-    claim-message: "<gradient:#C41E3A:#FFD700:#228B22><bold>MERRY CHRISTMAS!</bold></gradient> &7You opened the final door!"
-    broadcast-message: "&#C41E3A&l🎄 &#FFD700%player_name% &fhas opened &#C41E3A&lChristmas Day &fon the Advent Calendar! &#228B22&l🎄"
+    claim-message: "<gradient:#C41E3A:#FFD700:#228B22><bold>MERRY CHRISTMAS!</bold></gradient>"
+    broadcast-message: "&#C41E3A🎄 &f%player_name% opened Christmas Day!"

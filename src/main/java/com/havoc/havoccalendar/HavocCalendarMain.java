@@ -9,6 +9,7 @@ import com.havoc.havoccalendar.util.DateUtils;
 import com.havoc.havoccalendar.util.SoundUtil;
 import com.havoc.havoccalendar.util.SoundUtil.SoundSettings;
 import com.havoc.havoccalendar.util.TextUtil;
+import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
@@ -41,6 +42,7 @@ public final class HavocCalendarMain extends JavaPlugin {
     private SoundSettings lockedSound = SoundSettings.DISABLED;
     private boolean allowRetroactiveClaims;
     private int lastClaimDay;
+    private boolean actionBarMessages = true;
 
     private BukkitTask autoSaveTask;
     private BukkitTask dayWatcherTask;
@@ -108,6 +110,7 @@ public final class HavocCalendarMain extends JavaPlugin {
     private void loadSettings() {
         dateUtils.load(getConfig());
         allowRetroactiveClaims = getConfig().getBoolean("allow-retroactive-claims", true);
+        actionBarMessages = !"CHAT".equalsIgnoreCase(getConfig().getString("message-display", "ACTION_BAR"));
         lastClaimDay = Math.clamp(getConfig().getInt("last-claim-day", 31), 25, 31);
         openSound = SoundUtil.fromConfig(getConfig().getConfigurationSection("open-sound"), getLogger(), "open-sound");
         claimSound = SoundUtil.fromConfig(getConfig().getConfigurationSection("claim-sound"), getLogger(), "claim-sound");
@@ -165,6 +168,7 @@ public final class HavocCalendarMain extends JavaPlugin {
     /**
      * Sends {@code messages.<key>} with the configured prefix. An empty message is treated as
      * disabled, letting server owners silence any line.
+     * Players get it on the action bar (or chat if message-display: CHAT); console always gets chat.
      */
     public void sendMessage(CommandSender sender, String key, Map<String, String> placeholders) {
         String raw = getConfig().getString("messages." + key);
@@ -175,14 +179,50 @@ public final class HavocCalendarMain extends JavaPlugin {
         sendRaw(sender, prefix + raw, placeholders);
     }
 
-    /** Sends a formatted line without the prefix. */
+    /** Sends a formatted line (no prefix) using the configured display mode. */
     public void sendRaw(CommandSender sender, String text, Map<String, String> placeholders) {
+        deliver(sender, TextUtil.parse(text, withSender(sender, placeholders)));
+    }
+
+    /** Always sends to chat. Used for multi-line output (help / info) that can't fit an action bar. */
+    public void sendChat(CommandSender sender, String text, Map<String, String> placeholders) {
+        sender.sendMessage(TextUtil.parse(text, withSender(sender, placeholders)));
+    }
+
+    /** Sends a component to a sender using the configured display mode. */
+    public void deliver(CommandSender sender, Component message) {
+        if (actionBarMessages && sender instanceof Player player) {
+            player.sendActionBar(message);
+        } else {
+            sender.sendMessage(message);
+        }
+    }
+
+    /**
+     * Server-wide announcement. In action-bar mode every online player (except {@code exclude},
+     * e.g. the claimer who is already seeing their own message) gets it on the action bar and the
+     * console gets a copy in the log.
+     */
+    public void broadcast(Component message, Player exclude) {
+        if (!actionBarMessages) {
+            getServer().broadcast(message);
+            return;
+        }
+        for (Player player : getServer().getOnlinePlayers()) {
+            if (!player.equals(exclude)) {
+                player.sendActionBar(message);
+            }
+        }
+        getServer().getConsoleSender().sendMessage(message);
+    }
+
+    private static Map<String, String> withSender(CommandSender sender, Map<String, String> placeholders) {
         Map<String, String> ph = new HashMap<>(placeholders);
         if (sender instanceof Player player) {
             ph.putIfAbsent("%player_name%", player.getName());
             ph.putIfAbsent("%player%", player.getName());
         }
-        sender.sendMessage(TextUtil.parse(text, ph));
+        return ph;
     }
 
     // =================================================================== accessors
