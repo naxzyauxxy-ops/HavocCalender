@@ -1,0 +1,479 @@
+# ============================================================================
+#  HavocCalendar - rewards.yml
+#
+#  Each day (1-25) supports:
+#    item-material      Bukkit material shown while the door is AVAILABLE
+#                       (CHEST, TRAPPED_CHEST, BARREL, ENDER_CHEST, BUNDLE, PLAYER_HEAD ...)
+#    head-texture       (optional, PLAYER_HEAD only) base64 value, textures.minecraft.net
+#                       URL or texture hash - gives you a custom "present" head.
+#    display-name       Name while available
+#    lore-unlocked      Lore while available to claim
+#    lore-claimed       Lore once claimed
+#    lore-locked        Lore while locked (future day)
+#    lore-missed        Lore when missed (only if allow-retroactive-claims: false)
+#    commands           Actions run on claim, in order. Prefixes:
+#                         (none) / [console]  - run from console
+#                         [player]            - run as the player
+#                         [message] <text>    - private message to the player
+#                         [broadcast] <text>  - server-wide message
+#    claim-message      (optional) replaces the default claim message
+#    broadcast-message  (optional) broadcast to the whole server when claimed
+#
+#  Placeholders: %player_name% %player_uuid% %day%
+#  Lore extras:  %unlock_date% %days_until% %days_until_christmas%
+#
+#  Any lore key omitted from a day falls back to the 'defaults' section.
+# ============================================================================
+
+defaults:
+  item-material: CHEST
+  lore-claimed:
+    - ""
+    - "&8&mAlready opened"
+    - "&7You claimed this gift. &8✔"
+  lore-locked:
+    - ""
+    - "&7This door is still locked!"
+    - "&7Unlocks: &f%unlock_date%"
+    - "&7In &f%days_until% &7day(s)"
+    - ""
+    - "&8No peeking..."
+  lore-missed:
+    - ""
+    - "&7You missed this day."
+    - "&8Santa brought you coal instead."
+
+days:
+  1:
+    item-material: CHEST
+    display-name: "&#FFFFFF&lDay 1 &8» &fFirst Snow"
+    lore-unlocked:
+      - ""
+      - "&7Rarity: &fCommon"
+      - ""
+      - "&#FFD700Contains:"
+      - "&7• 16x Cookies"
+      - "&7• 8x Snowballs"
+      - ""
+      - "&a&l» Click to open!"
+    commands:
+      - "give %player_name% minecraft:cookie 16"
+      - "give %player_name% minecraft:snowball 8"
+    broadcast-message: ""
+
+  2:
+    item-material: CHEST
+    display-name: "&#FFFFFF&lDay 2 &8» &fCocoa Break"
+    lore-unlocked:
+      - ""
+      - "&7Rarity: &fCommon"
+      - ""
+      - "&#FFD700Contains:"
+      - "&7• 8x Pumpkin Pie"
+      - "&7• 5 XP levels"
+      - ""
+      - "&a&l» Click to open!"
+    commands:
+      - "give %player_name% minecraft:pumpkin_pie 8"
+      - "xp add %player_name% 5 levels"
+    broadcast-message: ""
+
+  3:
+    item-material: CHEST
+    display-name: "&#FFFFFF&lDay 3 &8» &fWinter Coal"
+    lore-unlocked:
+      - ""
+      - "&7Rarity: &fCommon"
+      - ""
+      - "&#FFD700Contains:"
+      - "&7• 32x Coal"
+      - "&7• 16x Torches"
+      - ""
+      - "&a&l» Click to open!"
+    commands:
+      - "give %player_name% minecraft:coal 32"
+      - "give %player_name% minecraft:torch 16"
+    broadcast-message: ""
+
+  4:
+    item-material: CHEST
+    display-name: "&#FFFFFF&lDay 4 &8» &fIron Bells"
+    lore-unlocked:
+      - ""
+      - "&7Rarity: &fCommon"
+      - ""
+      - "&#FFD700Contains:"
+      - "&7• 16x Iron Ingots"
+      - ""
+      - "&a&l» Click to open!"
+    commands:
+      - "give %player_name% minecraft:iron_ingot 16"
+    broadcast-message: ""
+
+  5:
+    item-material: CHEST
+    display-name: "&#FFFFFF&lDay 5 &8» &fGolden Rings"
+    lore-unlocked:
+      - ""
+      - "&7Rarity: &fCommon"
+      - ""
+      - "&#FFD700Contains:"
+      - "&7• 5x Gold Ingots"
+      - "&7• 2x Golden Apples"
+      - ""
+      - "&a&l» Click to open!"
+    commands:
+      - "give %player_name% minecraft:gold_ingot 5"
+      - "give %player_name% minecraft:golden_apple 2"
+    broadcast-message: ""
+
+  6:
+    item-material: TRAPPED_CHEST
+    display-name: "&#228B22&lDay 6 &8» &aSt. Nicholas"
+    lore-unlocked:
+      - ""
+      - "&7Rarity: &aUncommon"
+      - ""
+      - "&#FFD700Contains:"
+      - "&7• 3x Diamonds"
+      - "&7• 10 XP levels"
+      - ""
+      - "&a&l» Click to open!"
+    commands:
+      - "give %player_name% minecraft:diamond 3"
+      - "xp add %player_name% 10 levels"
+    broadcast-message: ""
+
+  7:
+    item-material: CHEST
+    display-name: "&#FFFFFF&lDay 7 &8» &fCozy Fireplace"
+    lore-unlocked:
+      - ""
+      - "&7Rarity: &fCommon"
+      - ""
+      - "&#FFD700Contains:"
+      - "&7• 32x Oak Logs"
+      - "&7• 1x Campfire"
+      - ""
+      - "&a&l» Click to open!"
+    commands:
+      - "give %player_name% minecraft:oak_log 32"
+      - "give %player_name% minecraft:campfire 1"
+    broadcast-message: ""
+
+  8:
+    item-material: CHEST
+    display-name: "&#FFFFFF&lDay 8 &8» &fFestive Lights"
+    lore-unlocked:
+      - ""
+      - "&7Rarity: &fCommon"
+      - ""
+      - "&#FFD700Contains:"
+      - "&7• 16x Lanterns"
+      - "&7• 8x Glowstone"
+      - ""
+      - "&a&l» Click to open!"
+    commands:
+      - "give %player_name% minecraft:lantern 16"
+      - "give %player_name% minecraft:glowstone 8"
+    broadcast-message: ""
+
+  9:
+    item-material: CHEST
+    display-name: "&#FFFFFF&lDay 9 &8» &fReindeer Feed"
+    lore-unlocked:
+      - ""
+      - "&7Rarity: &fCommon"
+      - ""
+      - "&#FFD700Contains:"
+      - "&7• 16x Golden Carrots"
+      - ""
+      - "&a&l» Click to open!"
+    commands:
+      - "give %player_name% minecraft:golden_carrot 16"
+    broadcast-message: ""
+
+  10:
+    item-material: TRAPPED_CHEST
+    display-name: "&#228B22&lDay 10 &8» &aSnow Globe"
+    lore-unlocked:
+      - ""
+      - "&7Rarity: &aUncommon"
+      - ""
+      - "&#FFD700Contains:"
+      - "&7• 16x Emeralds"
+      - "&7• 64x Blue Ice"
+      - ""
+      - "&a&l» Click to open!"
+    commands:
+      - "give %player_name% minecraft:emerald 16"
+      - "give %player_name% minecraft:blue_ice 64"
+    broadcast-message: ""
+
+  11:
+    item-material: CHEST
+    display-name: "&#FFFFFF&lDay 11 &8» &fWorkshop Tools"
+    lore-unlocked:
+      - ""
+      - "&7Rarity: &fCommon"
+      - ""
+      - "&#FFD700Contains:"
+      - "&7• 1x Iron Pickaxe"
+      - "&7• 1x Iron Axe"
+      - ""
+      - "&a&l» Click to open!"
+    commands:
+      - "give %player_name% minecraft:iron_pickaxe 1"
+      - "give %player_name% minecraft:iron_axe 1"
+    broadcast-message: ""
+
+  12:
+    item-material: TRAPPED_CHEST
+    display-name: "&#228B22&lDay 12 &8» &aTwelve Days"
+    lore-unlocked:
+      - ""
+      - "&7Rarity: &aUncommon"
+      - ""
+      - "&#FFD700Contains:"
+      - "&7• 12x Ender Pearls"
+      - "&7• 12 XP levels"
+      - ""
+      - "&a&l» Click to open!"
+    commands:
+      - "give %player_name% minecraft:ender_pearl 12"
+      - "xp add %player_name% 12 levels"
+    broadcast-message: ""
+
+  13:
+    item-material: CHEST
+    display-name: "&#FFFFFF&lDay 13 &8» &fGingerbread"
+    lore-unlocked:
+      - ""
+      - "&7Rarity: &fCommon"
+      - ""
+      - "&#FFD700Contains:"
+      - "&7• 32x Bread"
+      - "&7• 16x Cookies"
+      - ""
+      - "&a&l» Click to open!"
+    commands:
+      - "give %player_name% minecraft:bread 32"
+      - "give %player_name% minecraft:cookie 16"
+    broadcast-message: ""
+
+  14:
+    item-material: TRAPPED_CHEST
+    display-name: "&#228B22&lDay 14 &8» &aElf Library"
+    lore-unlocked:
+      - ""
+      - "&7Rarity: &aUncommon"
+      - ""
+      - "&#FFD700Contains:"
+      - "&7• 3x Bookshelves"
+      - "&7• 16x Lapis Lazuli"
+      - ""
+      - "&a&l» Click to open!"
+    commands:
+      - "give %player_name% minecraft:bookshelf 3"
+      - "give %player_name% minecraft:lapis_lazuli 16"
+    broadcast-message: ""
+
+  15:
+    item-material: BARREL
+    display-name: "&#4169E1&lDay 15 &8» &9Halfway Gift"
+    lore-unlocked:
+      - ""
+      - "&7Rarity: &9Rare"
+      - ""
+      - "&#FFD700Contains:"
+      - "&7• 5x Diamonds"
+      - "&7• 1x Enchanted Golden Apple"
+      - ""
+      - "&a&l» Click to open!"
+    commands:
+      - "give %player_name% minecraft:diamond 5"
+      - "give %player_name% minecraft:enchanted_golden_apple 1"
+    broadcast-message: ""
+
+  16:
+    item-material: CHEST
+    display-name: "&#FFFFFF&lDay 16 &8» &fSleigh Rails"
+    lore-unlocked:
+      - ""
+      - "&7Rarity: &fCommon"
+      - ""
+      - "&#FFD700Contains:"
+      - "&7• 32x Powered Rails"
+      - "&7• 1x Minecart"
+      - ""
+      - "&a&l» Click to open!"
+    commands:
+      - "give %player_name% minecraft:powered_rail 32"
+      - "give %player_name% minecraft:minecart 1"
+    broadcast-message: ""
+
+  17:
+    item-material: TRAPPED_CHEST
+    display-name: "&#228B22&lDay 17 &8» &aWinter Armour"
+    lore-unlocked:
+      - ""
+      - "&7Rarity: &aUncommon"
+      - ""
+      - "&#FFD700Contains:"
+      - "&7• 1x Diamond Helmet"
+      - "&7• 1x Leather Boots"
+      - ""
+      - "&a&l» Click to open!"
+    commands:
+      - "give %player_name% minecraft:diamond_helmet 1"
+      - "give %player_name% minecraft:leather_boots 1"
+    broadcast-message: ""
+
+  18:
+    item-material: TRAPPED_CHEST
+    display-name: "&#228B22&lDay 18 &8» &aShimmering Ice"
+    lore-unlocked:
+      - ""
+      - "&7Rarity: &aUncommon"
+      - ""
+      - "&#FFD700Contains:"
+      - "&7• 32x Packed Ice"
+      - "&7• 16 XP levels"
+      - ""
+      - "&a&l» Click to open!"
+    commands:
+      - "give %player_name% minecraft:packed_ice 32"
+      - "xp add %player_name% 16 levels"
+    broadcast-message: ""
+
+  19:
+    item-material: BARREL
+    display-name: "&#4169E1&lDay 19 &8» &9Enchanter's Gift"
+    lore-unlocked:
+      - ""
+      - "&7Rarity: &9Rare"
+      - ""
+      - "&#FFD700Contains:"
+      - "&7• 1x Mending Book"
+      - ""
+      - "&a&l» Click to open!"
+    commands:
+      - "give %player_name% minecraft:enchanted_book[stored_enchantments={mending:1}] 1"
+    broadcast-message: ""
+
+  20:
+    item-material: BARREL
+    display-name: "&#4169E1&lDay 20 &8» &9Starlight"
+    lore-unlocked:
+      - ""
+      - "&7Rarity: &9Rare"
+      - ""
+      - "&#FFD700Contains:"
+      - "&7• 8x Diamonds"
+      - "&7• 16x Firework Rockets"
+      - ""
+      - "&a&l» Click to open!"
+    commands:
+      - "give %player_name% minecraft:diamond 8"
+      - "give %player_name% minecraft:firework_rocket 16"
+    broadcast-message: ""
+
+  21:
+    item-material: BARREL
+    display-name: "&#4169E1&lDay 21 &8» &9Winter Solstice"
+    lore-unlocked:
+      - ""
+      - "&7Rarity: &9Rare"
+      - ""
+      - "&#FFD700Contains:"
+      - "&7• 2x Enchanted Golden Apples"
+      - "&7• 20 XP levels"
+      - ""
+      - "&a&l» Click to open!"
+    commands:
+      - "give %player_name% minecraft:enchanted_golden_apple 2"
+      - "xp add %player_name% 20 levels"
+    broadcast-message: ""
+
+  22:
+    item-material: ENDER_CHEST
+    display-name: "&#9B30FF&lDay 22 &8» &5Santa's Stash"
+    lore-unlocked:
+      - ""
+      - "&7Rarity: &5Epic"
+      - ""
+      - "&#FFD700Contains:"
+      - "&7• 1x Shulker Box"
+      - "&7• 16x Diamonds"
+      - ""
+      - "&a&l» Click to open!"
+    commands:
+      - "give %player_name% minecraft:shulker_box 1"
+      - "give %player_name% minecraft:diamond 16"
+    broadcast-message: "&#9B30FF✦ &f%player_name% &7opened an &5Epic &7Advent door (Day %day%)!"
+
+  23:
+    item-material: ENDER_CHEST
+    display-name: "&#9B30FF&lDay 23 &8» &5North Pole Totem"
+    lore-unlocked:
+      - ""
+      - "&7Rarity: &5Epic"
+      - ""
+      - "&#FFD700Contains:"
+      - "&7• 1x Totem of Undying"
+      - "&7• 2x Netherite Scrap"
+      - ""
+      - "&a&l» Click to open!"
+    commands:
+      - "give %player_name% minecraft:totem_of_undying 1"
+      - "give %player_name% minecraft:netherite_scrap 2"
+    broadcast-message: "&#9B30FF✦ &f%player_name% &7opened an &5Epic &7Advent door (Day %day%)!"
+
+  24:
+    item-material: ENDER_CHEST
+    display-name: "&#9B30FF&lDay 24 &8» &5Christmas Eve"
+    lore-unlocked:
+      - ""
+      - "&7Rarity: &5Epic"
+      - ""
+      - "&#FFD700Contains:"
+      - "&7• 1x Elytra"
+      - "&7• 32x Firework Rockets"
+      - ""
+      - "&a&l» Click to open!"
+    commands:
+      - "give %player_name% minecraft:elytra 1"
+      - "give %player_name% minecraft:firework_rocket 32"
+    broadcast-message: "&#9B30FF✦ &f%player_name% &7opened an &5Epic &7Advent door (Day %day%)!"
+
+  25:
+    item-material: NETHER_STAR
+    display-name: "<gradient:#C41E3A:#FFD700:#228B22><bold>Day 25 » CHRISTMAS DAY</bold></gradient>"
+    lore-unlocked:
+      - ""
+      - "&7Rarity: <gradient:#FFD700:#FF8C00><bold>LEGENDARY</bold></gradient>"
+      - ""
+      - "&#FFD700Contains:"
+      - "&7• 1x Netherite Ingot"
+      - "&7• 1x Nether Star"
+      - "&7• 32x Diamonds"
+      - "&7• 30 XP levels"
+      - ""
+      - "&a&l» Click to open!"
+    lore-claimed:
+      - ""
+      - "&8&mChristmas Day opened"
+      - "&7Merry Christmas! &c❤"
+    lore-locked:
+      - ""
+      - "&7The grand finale!"
+      - "&7Unlocks on &f%unlock_date%"
+      - "&7Only &f%days_until% &7day(s) to go..."
+    commands:
+      - "give %player_name% minecraft:netherite_ingot 1"
+      - "give %player_name% minecraft:nether_star 1"
+      - "give %player_name% minecraft:diamond 32"
+      - "xp add %player_name% 30 levels"
+      - "[message] &#FFD700✦ &fMerry Christmas from the whole staff team! &#FFD700✦"
+    claim-message: "<gradient:#C41E3A:#FFD700:#228B22><bold>MERRY CHRISTMAS!</bold></gradient> &7You opened the final door!"
+    broadcast-message: "&#C41E3A&l🎄 &#FFD700%player_name% &fhas opened &#C41E3A&lChristmas Day &fon the Advent Calendar! &#228B22&l🎄"

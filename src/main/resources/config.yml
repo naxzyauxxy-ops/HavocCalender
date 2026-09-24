@@ -1,0 +1,201 @@
+# ============================================================================
+#   _   _                          ____      _                _
+#  | | | | __ ___   _____   ___   / ___|__ _| | ___ _ __   __| | __ _ _ __
+#  | |_| |/ _` \ \ / / _ \ / __| | |   / _` | |/ _ \ '_ \ / _` |/ _` | '__|
+#  |  _  | (_| |\ V / (_) | (__  | |__| (_| | |  __/ | | | (_| | (_| | |
+#  |_| |_|\__,_| \_/ \___/ \___|  \____\__,_|_|\___|_| |_|\__,_|\__,_|_|
+#
+#  HavocCalendar - December Advent Calendar
+#
+#  TEXT FORMATTING - every text option accepts any mix of:
+#    * Legacy codes ........ &a &c &l &m &o &r
+#    * Hex colours ......... &#C41E3A   (or &x&C&4&1&E&3&A)
+#    * MiniMessage tags .... <gradient:#C41E3A:#FFFFFF>Text</gradient>, <rainbow>, <bold>
+#  Set any message to "" to disable it.
+# ============================================================================
+
+# Can players claim doors from earlier December days they missed?
+#   true  -> missed days stay claimable until 'last-claim-day'
+#   false -> only today's door can be claimed; older unclaimed doors show as "missed"
+allow-retroactive-claims: true
+
+# Last December day on which any claims are accepted (25-31).
+# After this day every unclaimed door is shown as "missed".
+last-claim-day: 31
+
+# Allow opening the GUI outside of December (all doors are shown locked).
+allow-open-outside-december: true
+
+# Close the GUI automatically after a successful claim.
+close-on-claim: false
+
+# Minimum milliseconds between door clicks (anti spam-click).
+click-cooldown-ms: 300
+
+# Announce "a new door is open" to online players at midnight.
+announce-new-day: true
+
+# Remind players on join if they have doors waiting.
+join-reminder:
+  enabled: true
+  delay-ticks: 60
+
+date:
+  # "server" = the machine's time zone, or any Java zone id such as
+  # "America/New_York", "Europe/London", "Australia/Sydney".
+  timezone: "server"
+  # Format for %unlock_date% (Java DateTimeFormatter pattern) and its language.
+  unlock-date-format: "MMMM d"
+  locale: "en"
+
+data:
+  # How often dirty player data is written to data.yml (async). Minimum 30.
+  autosave-interval-seconds: 300
+
+testing:
+  # Force a December day on startup (1-31), 0 = disabled.
+  # Prefer the in-game command: /havoccalendar setday <day|off>
+  override-day: 0
+
+# ----------------------------------------------------------------------------
+#  Sounds - use Bukkit names (ENTITY_PLAYER_LEVELUP) or namespaced keys
+#  (minecraft:entity.player.levelup / custom resource-pack sounds).
+#  volume >= 0, pitch 0.5 - 2.0
+# ----------------------------------------------------------------------------
+open-sound:
+  enabled: true
+  sound: BLOCK_CHEST_OPEN
+  volume: 0.8
+  pitch: 1.2
+
+claim-sound:
+  enabled: true
+  sound: ENTITY_PLAYER_LEVELUP
+  volume: 1.0
+  pitch: 1.0
+
+locked-sound:
+  enabled: true
+  sound: BLOCK_CHEST_LOCKED
+  volume: 1.0
+  pitch: 1.0
+
+# ----------------------------------------------------------------------------
+#  GUI
+# ----------------------------------------------------------------------------
+gui:
+  title: "&#C41E3A&l❄ &#FFFFFF&lAdvent &#228B22&lCalendar &#C41E3A&l❄"
+
+  # Show the day number as the stack size of each door (1-25).
+  day-as-stack-amount: true
+
+  # 6 rows x 9 columns. Characters:
+  #   D = advent door (exactly 25, numbered left->right, top->bottom)
+  #   I = info item      X = close button      space or . = empty
+  #   anything else = a decoration from 'pattern-items'
+  pattern:
+    - "RLDDDDDLR"
+    - "WLDDDDDLW"
+    - "RLDDDDDLR"
+    - "WLDDDDDLW"
+    - "RLDDDDDLR"
+    - "LRWLIRWXL"
+
+  pattern-items:
+    R:
+      material: RED_STAINED_GLASS_PANE
+      name: " "
+    L:
+      material: LIME_STAINED_GLASS_PANE
+      name: " "
+    W:
+      material: WHITE_STAINED_GLASS_PANE
+      name: " "
+
+  info-item:
+    material: CLOCK
+    glow: true
+    name: "<gradient:#C41E3A:#FFFFFF:#228B22><bold>Christmas Countdown</bold></gradient>"
+    lore:
+      - ""
+      - "&7Today: &f%today%"
+      - "&7Days until Christmas: &#FFD700%days_until_christmas%"
+      - ""
+      - "&7Doors opened: &a%claimed%&7/&a%total%"
+      - "&7Ready to claim: &e%available%"
+      - "&7Late claims: %retroactive%"
+      - ""
+      - "&#A8E6FF❄ &7Merry Christmas, &f%player_name%&7! &#A8E6FF❄"
+    not-december-text: "&cNot December yet"
+    retroactive-enabled-text: "&aEnabled"
+    retroactive-disabled-text: "&cDisabled"
+
+  close-item:
+    material: SPRUCE_DOOR
+    name: "&c&lClose"
+    lore:
+      - "&7Click to close the calendar."
+
+# ----------------------------------------------------------------------------
+#  Door states. AVAILABLE doors use the material/name from rewards.yml.
+#  Placeholders: %day% %unlock_date% %days_until% %days_until_christmas% %player_name%
+# ----------------------------------------------------------------------------
+states:
+  available:
+    glow: true
+  claimed:
+    material: MINECART
+    name: "&8&mDay %day%"
+    glow: false
+  locked:
+    material: RED_STAINED_GLASS_PANE
+    name: "&#C41E3A&lDay %day% &8» &7Locked"
+    glow: false
+  missed:
+    material: COAL
+    name: "&7Day %day% &8» &8Missed"
+    glow: false
+
+# ----------------------------------------------------------------------------
+#  Messages
+# ----------------------------------------------------------------------------
+messages:
+  prefix: "&#C41E3A&l[&#FFFFFF&lAdvent&#C41E3A&l] &r"
+  no-permission: "&cYou don't have permission to do that."
+  player-only: "&cOnly players can open the Advent Calendar."
+  not-december: "&7The Advent Calendar opens on &#FFD700December 1st &7(in &f%days_until% &7days)!"
+  claim-success: "&aYou opened door &f#%day%&a! Enjoy your gift. &#FFD700✦"
+  already-claimed: "&7You've already opened door &f#%day%&7."
+  day-locked: "&cNo peeking! &7Door &f#%day% &7unlocks on &f%unlock_date% &7(in &f%days_until% &7day(s))."
+  day-locked-not-december: "&cThe calendar hasn't started yet! &7Come back on &fDecember 1st&7."
+  day-missed: "&7You missed door &f#%day%&7... &8Santa left you coal instead."
+  new-day-available: "&#228B22&l🎁 &aDoor &f#%day% &ais now open! Use &f/calendar &ato claim it."
+  join-reminder: "&#FFD700✦ &7You have &e%available% &7Advent door(s) waiting! Type &f/calendar&7."
+  reloaded: "&aconfig.yml and rewards.yml reloaded."
+  usage-reset: "&cUsage: /%label% reset <player> [day]"
+  usage-setday: "&cUsage: /%label% setday <1-31|off>"
+  player-not-found: "&cNo data found for player &f%player%&c."
+  invalid-day: "&c'%input%' is not a valid day (1-%max%)."
+  reset-all: "&aReset all %year% claims for &f%player%&a."
+  reset-day: "&aReset day &f%day% &a(%year%) for &f%player%&a."
+  reset-nothing: "&7%player% had nothing to reset for day %day% (%year%)."
+  setday-set: "&eSimulating &fDecember %day%&e for everyone. &7(/havoccalendar setday off to stop - not saved across restarts)"
+  setday-cleared: "&aDate override removed - using the real date again."
+
+  help:
+    - "&#C41E3A&l❄ &fHavocCalendar"
+    - "&e/%label% &7- Open the Advent Calendar"
+  help-admin:
+    - "&#C41E3A&l❄ &fHavocCalendar &7- Admin"
+    - "&e/%label% &7- Open the Advent Calendar"
+    - "&e/%label% reload &7- Reload config.yml & rewards.yml"
+    - "&e/%label% reset <player> [day] &7- Reset claim data"
+    - "&e/%label% setday <1-31|off> &7- Simulate a December day"
+    - "&e/%label% info &7- Show date/debug information"
+  info:
+    - "&#C41E3A&l❄ &fHavocCalendar Info"
+    - "&7Real date: &f%real_date% &8(%timezone%)"
+    - "&7Override: &f%override%"
+    - "&7Effective December day: &f%today%"
+    - "&7Event year: &f%year%"
+    - "&7Retroactive claims: &f%retroactive%"

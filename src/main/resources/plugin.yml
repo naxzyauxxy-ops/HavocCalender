@@ -1,0 +1,24 @@
+name: HavocCalendar
+version: '${project.version}'
+main: com.havoc.havoccalendar.HavocCalendarMain
+api-version: '1.21'
+description: A festive 1-25 December Advent Calendar GUI with daily tiered rewards.
+authors: [ Havoc ]
+website: https://github.com/havoc/HavocCalendar
+load: POSTWORLD
+
+commands:
+  havoccalendar:
+    description: Open the Advent Calendar or manage it (reload / reset / setday / info).
+    usage: /<command> [reload|reset <player> [day]|setday <day|off>|info|help]
+    aliases: [ calendar, advent ]
+
+permissions:
+  havoccalendar.use:
+    description: Allows opening the Advent Calendar and claiming rewards.
+    default: true
+  havoccalendar.admin:
+    description: Allows reloading, resetting player data and simulating December days.
+    default: op
+    children:
+      havoccalendar.use: true
