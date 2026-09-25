@@ -24,7 +24,10 @@ allow-retroactive-claims: true
 last-claim-day: 31
 
 # Allow opening the GUI outside of December (all doors are shown locked).
-allow-open-outside-december: true
+# false = /calendar is blocked until December 1st and players just see
+#         "Opens Dec 1 (Xd)" on the action bar. Admins can still test with
+#         /havoccalendar setday <day>.
+allow-open-outside-december: false
 
 # Where messages are shown: ACTION_BAR or CHAT.
 # (help / info lists always use chat since they are multi-line)

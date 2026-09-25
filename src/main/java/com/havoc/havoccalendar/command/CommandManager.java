@@ -94,7 +94,7 @@ public final class CommandManager implements CommandExecutor, TabCompleter {
         if (!dates.isDecember()) {
             Map<String, String> ph = Map.of("%days_until%", String.valueOf(dates.daysUntil(DateUtils.FIRST_DAY)));
             plugin.sendMessage(player, "not-december", ph);
-            if (!plugin.getConfig().getBoolean("allow-open-outside-december", true)) {
+            if (!plugin.getConfig().getBoolean("allow-open-outside-december", false)) {
                 plugin.lockedSound().play(player);
                 return;
             }

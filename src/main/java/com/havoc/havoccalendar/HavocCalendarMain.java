@@ -146,6 +146,11 @@ public final class HavocCalendarMain extends JavaPlugin {
             return;
         }
         lastKnownDay = today;
+        if (today == 0 && !getConfig().getBoolean("allow-open-outside-december", false)) {
+            // December just ended: the calendar is closed again, kick anyone still viewing it.
+            calendarGUI.closeAll();
+            return;
+        }
         calendarGUI.refreshAll();
 
         if (DateUtils.isValidAdventDay(today) && getConfig().getBoolean("announce-new-day", true)) {
